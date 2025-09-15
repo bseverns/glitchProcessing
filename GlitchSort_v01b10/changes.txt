@@ -1,0 +1,53 @@
+The current version of GlitchSort, 1.0b10, was written specifically to run in Processing 2.0. It 
+has changed very little from the previous version for 1.5.1, but will not run in that environment. 
+
+I expect to post the Eclipse version to GitHub eventually. If you want the code now, before I get
+it posted, please contact me. This code is published under the GNU Lesser General Public License
+and is free for you or anyone else to use and modify.
+
+
+ author		Paul Hertz
+ created	July 13, 2012 
+ modified	June 7, 2013
+ version  	1.0b10 for Processing 2.0
+ 				- various minor changes. The biggest change is that this version runs in Processing 2.0
+ 				- Same old manual
+ 				- save (s) and save a copy (S) commands, revert to saved (r) and revert to original (R)
+ 				- open file (o) and load file to snapshot buffer (O)
+ 				- rotate right (t) and rotate left (T)
+ 				- added zigzag percent number box, sets percent of blocks that get zigzag sorted on each pass
+ 				- ***** requires Processing 2.0, processing.org  *****
+ 				- ***** requires ControlP5 2.0.4, www.sojamo.de/code ***** 
+ 				- The Processing version has been broken into tabs to make it easier to view the code.
+ version	1.0b9 for Processing 1.5.1
+ 				- added '_' (underscore) key command to turn 4 times repeating lastCommand
+ 				- fixed dragging to work both when control panel is visible and when it is not, 
+ 				  without shift key--covers most cases, but doesn't track collapsed panels
+ 				- added scaledLowPass method, low pass filter each RGB channel with different 
+ 				  FFT block size (64, 32, 16), component order depends on current Component Sorting Order setting
+                Currently only triggered with ')' key command, works best when pixel dimension are multiples of 64.
+ 				- added ZigzagStyle enum and zigzagStyle variable to set zigzag sorting to random angles, aligned angles, 
+ 				  or angles permuted in blocks of four
+ 				- added global variables for control panel location and width
+ 				- added flipX and flipY methods to Zigzagger to handle changing zigzag angle
+ 				- changed default settings of statistical FFT
+ 				- various small fixes 
+ version 	1.0b8a
+ 				- changes from last version
+ 				- fixed denoise command to include edge and corner pixels
+ 				- added lastCommand variable, tracks last key command in "gl<>9kjdGLKJD" 
+ 				- Version 1.0b8 included a new reference manual 
+ 
+ If the manual wasn't included, see http://paulhertz.net/factory/2012/08/glitchsort2/.
+
+ISSUES as of version 1.0b10
+0. Processing 2.0 resolved the image memory leak problem: this version of GlitchSort runs in Processing 2.0 (not 1.5.1!).
+1. Type 'r' (reload) or 'f' fit to screen after loading the first picture to get correct window size. (Processing 1.5.1).
+2. Using return key to load a file from the file dialog sometimes causes application to hang. Double-click works.
+3. The display window may still hide a row or two of pixels, though I think I have 
+   fixed this. You can drag it a little bigger.
+4. Audify ('/' and '\' is new and still kludgy, but the bugs that would cause a crash in 
+  1.0b7 pre-release "c" seem to have been fixed.
+5. The Minim library routines I use for FFT are now deprecated, but functional. 
+6. There must be other issues. 
+
