@@ -9,6 +9,9 @@ String type = "jpg"; //file type
 void setup(){
  size(800,800); 
   img=loadImage("smallsnarl.jpg");
+  if (img == null) {
+    failFast("Missing input image: data/smallsnarl.jpg");
+  }
   
 }
 
@@ -35,4 +38,9 @@ void keyPressed() {
     save(name + "_" + count + "." + type);
     println("export");
   }
+}
+
+void failFast(String message) {
+  println(message);
+  exit();
 }

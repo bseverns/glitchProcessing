@@ -33,6 +33,9 @@ void setup() {
   // load images into PImage variables
   targetImg = loadImage(imgFileName+"."+fileType);
   sourceImg = loadImage(imgFileName+"."+fileType);
+  if (targetImg == null || sourceImg == null) {
+    failFast("Missing input image: data/" + imgFileName + "." + fileType);
+  }
   
   // use only numbers (not variables) for the size() command, Processing 3
   size(1, 1);
@@ -195,4 +198,9 @@ void mouseClicked() {
   {
     System.exit(0);
   }
+}
+
+void failFast(String message) {
+  println(message);
+  exit();
 }

@@ -1,10 +1,12 @@
 //to glitch videos
 
+import java.io.File;
 import processing.video.*; 
 Movie mov;
 
 PImage img1;
 int w=640, h=480;
+boolean hasFrame = false;
 
 boolean bright = true;
 boolean greyScale;
@@ -13,12 +15,21 @@ int grid = 1;
 
 void setup() {
   //fullScreen();
-  size(1920, 1080);
+  size(640, 480);
+  File movieFile = new File(dataPath("bath.mov"));
+  if (!movieFile.exists()) {
+    failFast("Missing input movie: data/bath.mov");
+  }
   mov = new Movie(this, "bath.mov"); 
   mov.play();
 }
 
 void draw() { 
+  if (!hasFrame) {
+    background(0);
+    return;
+  }
+
   loadPixels(); // Fills pixelarray
   float mouseMap = (int) map(mouseX, 0, width, 0, 255*3); // Brightness threshold mapped to mouse coordinates
 
@@ -26,13 +37,14 @@ void draw() {
     shiftAmount = 0;
   };
 
-  for (int y = 0; y< h; y++)
+  int frameWidth = min(width, mov.width);
+  int frameHeight = min(height, mov.height);
+
+  for (int y = 0; y< frameHeight; y++)
   {
-    for (int x = 0; x< w; x++)
+    for (int x = 0; x< frameWidth; x++)
     {
       color c = mov.pixels[y*mov.width+x]; 
-
-      int a = (c >> 24) & 0xFF;
       int r = (c >> 16) & 0xFF;  
       int g = (c >> 8) & 0xFF;  
       int b = c & 0xFF; 
@@ -42,16 +54,22 @@ void draw() {
         if (bright)
         {
           if (r+g+b > mouseMap) {
-            pixels[y*w+x] = c << shiftAmount; // Bit-shift based on shift amount
+            pixels[y*width+x] = c << shiftAmount; // Bit-shift based on shift amount
+          } else {
+            pixels[y*width+x] = c;
           }
         }
 
         if (!bright)
         {
           if (r+g+b < mouseMap) {
-            pixels[y*w+x] = c << shiftAmount; // Bit-shift based on shift amount
+            pixels[y*width+x] = c << shiftAmount; // Bit-shift based on shift amount
+          } else {
+            pixels[y*width+x] = c;
           }
         }
+      } else {
+        pixels[y*width+x] = c;
       }
     }
   }
@@ -83,25 +101,20 @@ void keyPressed()
     grid++;    
     break;
   case TAB:
-    if (bright) {
-      bright = false;
-    }
-    if (!bright) {
-      bright = true;
-    }
+    bright = !bright;
     break;
   case ENTER:
-    if (!greyScale) {
-      greyScale = true;
-      break;
-    }
-    if (greyScale) {
-      greyScale = false;
-      break;
-    }
+    greyScale = !greyScale;
+    break;
   }
 }
 
-void captureEvent(Capture c) { 
-  c.read();
+void movieEvent(Movie movie) {
+  movie.read();
+  hasFrame = true;
+}
+
+void failFast(String message) {
+  println(message);
+  exit();
 }

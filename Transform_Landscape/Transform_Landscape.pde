@@ -25,6 +25,9 @@ void setup() {
   // Extract the brightness of each pixel in the image
   // and store in the "values" array
   img = loadImage("nasa-iceberg.jpg");
+  if (img == null) {
+    failFast("Missing input image: data/nasa-iceberg.jpg");
+  }
   img.loadPixels();
   for (int i = 0; i < img.height; i++) {
     for (int j = 0; j < img.width; j++) {
@@ -32,6 +35,11 @@ void setup() {
       values[j][i] = int(brightness(pixel));
     }
   }
+}
+
+void failFast(String message) {
+  println(message);
+  exit();
 }
 
 void draw() {
@@ -58,4 +66,3 @@ void draw() {
     }
   }
 }
-

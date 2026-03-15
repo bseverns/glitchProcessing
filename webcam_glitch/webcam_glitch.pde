@@ -8,6 +8,7 @@ boolean bright = true;
 boolean greyScale;
 int shiftAmount = 4;
 int grid = 1;
+boolean hasFrame = false;
 
 
 void setup() {
@@ -17,6 +18,11 @@ void setup() {
 }
 
 void draw() { 
+  if (!hasFrame) {
+    background(0);
+    return;
+  }
+
   loadPixels(); // Fills pixelarray
   float mouseMap = (int) map(mouseX, 0, width, 0, 255*3); // Brightness threshold mapped to mouse coordinates
 
@@ -29,8 +35,6 @@ void draw() {
     for (int x = 0; x< w; x++)
     {
       color c = video.pixels[y*video.width+x]; 
-
-      int a = (c >> 24) & 0xFF;
       int r = (c >> 16) & 0xFF;  
       int g = (c >> 8) & 0xFF;  
       int b = c & 0xFF; 
@@ -41,6 +45,8 @@ void draw() {
         {
           if (r+g+b > mouseMap) {
             pixels[y*w+x] = c << shiftAmount; // Bit-shift based on shift amount
+          } else {
+            pixels[y*w+x] = c;
           }
         }
 
@@ -48,8 +54,12 @@ void draw() {
         {
           if (r+g+b < mouseMap) {
             pixels[y*w+x] = c << shiftAmount; // Bit-shift based on shift amount
+          } else {
+            pixels[y*w+x] = c;
           }
         }
+      } else {
+        pixels[y*w+x] = c;
       }
     }
   }
@@ -81,25 +91,15 @@ void keyPressed()
     grid++;    
     break;
   case TAB:
-    if (bright) {
-      bright = false;
-    }
-    if (!bright) {
-      bright = true;
-    }
+    bright = !bright;
     break;
   case ENTER:
-    if (!greyScale) {
-      greyScale = true;
-      break;
-    }
-    if (greyScale) {
-      greyScale = false;
-      break;
-    }
+    greyScale = !greyScale;
+    break;
   }
 }
 
 void captureEvent(Capture c) { 
   c.read();
+  hasFrame = true;
 }
