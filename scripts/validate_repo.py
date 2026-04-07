@@ -28,11 +28,50 @@ SKETCHES = (
         ),
     ),
     Sketch(
+        name="ContourFieldGlitch",
+        entry_file="ContourFieldGlitch.pde",
+        repo_docs=("README.md",),
+        libraries=("processing.video",),
+        notes=(
+            "Requires a camera device available to Processing.",
+            "Uses a contour/edge field as CV control data.",
+        ),
+    ),
+    Sketch(
         name="GlitchSort_v01b10",
         entry_file="GlitchSort_v01b10.pde",
         repo_docs=("README.md", "gs10b8_Manual_web.pdf"),
         libraries=("ControlP5", "Minim"),
         notes=("Opens images through its own file picker at runtime.",),
+    ),
+    Sketch(
+        name="HybridCVGlitch",
+        entry_file="HybridCVGlitch.pde",
+        repo_docs=("README.md",),
+        libraries=("processing.video",),
+        notes=(
+            "Requires a camera device available to Processing.",
+            "Uses a blended contour-plus-motion CV control field.",
+        ),
+    ),
+    Sketch(
+        name="MotionCVGlitch",
+        entry_file="MotionCVGlitch.pde",
+        repo_docs=("README.md",),
+        libraries=("processing.video",),
+        notes=(
+            "Requires a camera device available to Processing.",
+            "Uses frame differencing as a lightweight CV signal.",
+        ),
+    ),
+    Sketch(
+        name="ScanlineTearGlitch",
+        entry_file="ScanlineTearGlitch.pde",
+        repo_docs=("README.md", "data/README.txt"),
+        notes=(
+            "Runs without media by generating its own source art.",
+            "Optional input: data/source.jpg.",
+        ),
     ),
     Sketch(
         name="Transform_Landscape",

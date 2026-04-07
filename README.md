@@ -10,7 +10,11 @@ Processing IDE.
 | Sketch | Focus | Bundled input | Extra setup |
 | --- | --- | --- | --- |
 | `ChannelShiftGlitch` | RGB channel displacement on still images | No | Add `data/MyImage.jpg` or change the filename in code |
+| `ContourFieldGlitch` | Webcam contour analysis driving temporal RGB shears and local scanline tears | Live camera | Install `processing.video` |
 | `GlitchSort_v01b10` | Pixel sorting workstation with UI and FFT tools | Runtime file picker | Install `ControlP5` and `Minim` |
+| `HybridCVGlitch` | Webcam hybrid of contour and motion analysis driving temporal shear and torn scanlines | Live camera | Install `processing.video` |
+| `MotionCVGlitch` | Webcam motion analysis driving temporal RGB lag and torn scanlines | Live camera | Install `processing.video` |
+| `ScanlineTearGlitch` | Horizontal scanline tearing with channel desync | Generated source; optional `data/source.jpg` | None |
 | `Transform_Landscape` | Image brightness mapped into 3D geometry | `data/nasa-iceberg.jpg` | None |
 | `Transform_SlitScan` | Slit-scan video sampling | `data/station.mov` | Install `processing.video` |
 | `UnifiedGlitchLab` | Unified glitch instrument with generated, image, movie, and webcam sources | Generated mode works immediately | Install `processing.video`; optional `data/source.jpg` and `data/source.mov` |
@@ -44,5 +48,13 @@ images or required Processing libraries.
   though the rest of the repo is straightforward to explore from Processing 3.
 - `ChannelShiftGlitch` and `video_glitch` now include placeholder `data/` folders so
   the expected input location is explicit.
+- `ContourFieldGlitch` and `MotionCVGlitch` are complementary CV examples: one follows
+  contours, the other follows motion.
+- `HybridCVGlitch` merges both signals on one grid so you can teach weighting,
+  thresholds, and competing control data without adding another library.
+- `MotionCVGlitch` uses simple frame differencing rather than an external OpenCV
+  library, so it stays easy to teach from a stock Processing + `processing.video` setup.
+- `ScanlineTearGlitch` runs without assets by generating its own source art, but you can
+  drop in `data/source.jpg` to make it a still-image exercise.
 - See [docs/processing-setup.md](/Users/bseverns/Documents/GitHub/glitchProcessing/docs/processing-setup.md)
   for a slightly more detailed setup checklist.
